@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export Text to File</title>
+</head>
+<body>
+    <h3>Bushy Writer</h3>
+    <input type="text" id="filename" placeholder="Enter filename without extension" /><br><br>
+    <textarea id="textbox" rows="10" cols="50" placeholder="Type your text here..."></textarea><br>
+    <button id="exportBtn" onclick="exportText()">Save</button>
+
+    <script>
+        function exportText() {
+            const text = document.getElementById('textbox').value;
+            let filename = document.getElementById('filename').value;
+            
+            // Use default filename if none is provided
+            if (!filename) {
+                filename = 'untitled';
+            }
+
+            const blob = new Blob([text], { type: 'text/plain' });
+            const anchor = document.createElement('a');
+            anchor.href = URL.createObjectURL(blob);
+            anchor.download = filename + '.txt';
+            document.body.appendChild(anchor);
+            anchor.click();
+            document.body.removeChild(anchor);
+        }
+    </script>
+</body>
+</html>
